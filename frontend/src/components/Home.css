@@ -1,0 +1,28 @@
+
+.home-page-container {
+    width: 100%;
+    height: 90vh;
+}
+
+.hero {
+    width: 100%;
+}
+
+.hero h1 {
+    padding: 35vh 4% 0 4%;
+    margin: 0 auto;
+    text-align: center;
+    font-family: Montserrat, sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--light-blue-color);   
+}
+
+@media screen and (max-width: 1000px) { .hero h1 { font-size: 2.1rem; } }
+@media screen and (max-width:  900px) { .hero h1 { font-size: 2.0rem; } }
+@media screen and (max-width:  800px) { .hero h1 { font-size: 1.8rem; } }
+@media screen and (max-width:  450px) { .hero h1 { font-size: 1.7rem; } }
+@media screen and (max-width:  400px) { .hero h1 { font-size: 1.6rem; } }
+@media screen and (max-width:  350px) { .hero h1 { font-size: 1.5rem; } }
+
+

@@ -1,0 +1,144 @@
+
+.contact-page-container {
+    margin-top: 20px;
+}
+
+.form-container {
+    width: 100%;
+    --form-bg-color: #333;
+    --form-input-bg-color: #555;
+    --font-family: 'Open Sans', sans-serif;
+    --form-text-color: white;
+    --form-input-focus-bg-color: #777;
+}
+
+.form-container form {
+    font-family: var(--font-family);
+    font-size: 16px;
+    width: 55%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0.8em 1.75em 1.75em 1.75em;
+    border-radius: 0.75em;
+    background-color: var(--form-bg-color);
+}
+
+.form__input,
+.form__label,
+.form__textarea,
+.form__button {
+    display: block;
+    width: 100%;
+    padding: 0.4em;
+    margin: 0.5em auto 0 auto;
+    border-radius: 0.5em;
+    font-family: var(--font-family);
+    font-size: 1em;
+    background-color: var(--form-input-bg-color);
+    color: var(--form-text-color);
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover {
+    border: 1px solid var(--form-bg-color);
+    box-shadow: 0 0 0 30px var(--form-input-bg-color) inset !important;
+    -webkit-box-shadow: 0 0 0 30px var(--form-input-bg-color) inset !important;
+    -webkit-text-fill-color: white;
+}
+
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    border: 1px solid springgreen;
+    box-shadow:  0 0 0 30px var(--form-input-bg-color) inset !important;
+    -webkit-box-shadow: 0 0 0 30px var(--form-input-focus-bg-color) inset !important;
+    -webkit-text-fill-color: white;
+}
+
+.form__input:focus,
+.form__textarea:focus {
+    background-color: var(--form-input-focus-bg-color);
+    box-shadow: 0 0 2px 2px springgreen;   
+}
+
+.form__label {
+    margin-top: 1.3em;
+    padding: 0;
+    background-color: inherit;
+    color: var(--light-blue-color);
+    font-size: 1.05em;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.form__textarea-label {
+    margin-top: 0.7em;
+}
+
+.form__textarea {
+    height: 10em;
+    margin-bottom: 0em;
+}
+
+.form__button {
+    background-color: mediumvioletred;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: white;
+    font-size: 1.05em;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 0.2em 0.4em;
+    transition: 0.2s;
+}
+
+.form__button:hover {
+    background-color: rgb(221, 72, 122);
+}
+
+.form__button:active {
+    background-color: rgb(209, 50, 58);
+}
+
+.form__input::placeholder,
+.form__textarea::placeholder {
+    font-size: 0.8em;
+    color: #aaa;
+}
+
+.form__required {
+    color: red;
+    margin-left: 3px;
+}
+
+.form__error,
+.form__error {
+    color: red;
+    font-size: 0.9em;
+    height: 1.1em;
+    margin: 0.3em auto;
+    font-weight: 700;
+    text-align: center;
+}
+
+.feedback-message {
+    color: springgreen;
+    font-size: 1em;
+    font-weight: 700;
+    width: 80%;
+    text-align: center;
+    margin: 0 auto 20px auto;
+    height: 1.5em;
+}
+
+@media (max-width: 950px) { .form-container form { width: 60%; } }
+@media (max-width: 750px) { .form-container form { width: 70%; } }
+@media (max-width: 550px) { 
+    .form-container form { width: 75%; } 
+    .feedback-message { font-size: 0.9em; }
+}
+
+@media (max-width: 400px) { .form-container form { padding: 0.8em 1.25em 1.75em 1.25em; } }
+@media (max-width: 350px) { .form-container form { padding: 0.8em 1em 1.75em 1em; } }
