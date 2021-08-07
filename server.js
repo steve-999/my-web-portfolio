@@ -66,7 +66,7 @@ app.post('/send', (req, res, next) => {
 
     sendMail(name, email, message)
         .then(result => {
-            const return_str = `Message sent: ${result}`;
+            const return_str = `Message sent: ${result.messageId}`;
             console.log(return_str)
             res.json({status: return_str});
         })
