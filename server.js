@@ -1,10 +1,19 @@
 "use strict";
 const express = require('express');
 const nodemailer = require("nodemailer");
+const {google} = require('googleapis')
 const cors = require('cors');
 const path = require('path');
 const app = express();
 require('dotenv').config();
+
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET; 
+const REDIRECT_URI = process.env.REDIRECT_URI;
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+
+const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN})
 
 app.use(express.static(path.join(__dirname, '/frontend/build')));
 app.use(express.json());
@@ -12,16 +21,8 @@ app.use(cors());
 
 const PORT = process.env.PORT || 80;
 
-app.post('/send', async (req, res, next) => {
-    const { name, email, message } = req.body;
-    const userInfo = {
-        service: "Gmail",
-        auth: {
-            user: process.env.GMAIL_USERNAME, 
-            pass: process.env.GMAIL_PASSWORD, 
-        }
-    }
-    let transporter = nodemailer.createTransport(userInfo);
+
+async function sendMail(name, email, message) {
 
     const messageToSend = `
     Name: ${name}
@@ -29,21 +30,50 @@ app.post('/send', async (req, res, next) => {
     Date: ${(new Date).toString()}\n
     Message: ${message}
     `;
+
     const mailOptions = {
         from: `"${name}" <${email}>`,
         to: `${process.env.DEST_EMAIL_ADDRESS}`,
         subject: "Message via web portfolio",
-        text: messageToSend,
+        text: messageToSend
     };
+
     try {
-        let info = await transporter.sendMail(mailOptions);
-        const return_str = `Message sent: ${info.messageId}`;
-        res.json({status: return_str});
+        const accessToken = await oAuth2Client.getAccessToken;
+
+        const transport = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                type: 'OAuth2',
+                user: 'steve.green1@gmail.com',
+                clientId: CLIENT_ID,
+                clientSecret: CLIENT_SECRET,
+                refreshToken: REFRESH_TOKEN,
+                accessToken: accessToken
+            }
+        });
+        const result = await transport.sendMail(mailOptions);
+        return result;
     }
-    catch(err) {
-        res.status(err.status || 500);
-        res.send({errorMessage: err});
+    catch (error) {
+        return error;
     }
+}
+
+
+app.post('/send', (req, res, next) => {
+    const { name, email, message } = req.body;
+
+    sendMail(name, email, message)
+        .then(result => {
+            const return_str = `Message sent: ${result}`;
+            console.log(return_str)
+            res.json({status: return_str});
+        })
+        .catch(err => {
+            res.status(err.status || 500);
+            res.send({errorMessage: err});
+        });
 });
 
 app.get('*', (req, res) => {
